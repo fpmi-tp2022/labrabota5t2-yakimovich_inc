@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2022-04-04 06:18:05.07
+-- Last modification date: 2022-04-04 15:19:42.505
 
 -- tables
 -- Table: CompactDisk
@@ -13,7 +13,7 @@ CREATE TABLE CompactDisk (
 
 -- Table: MusicalComposition
 CREATE TABLE MusicalComposition (
-    name int  NOT NULL,
+    name char(256)  NOT NULL,
     author char(256)  NOT NULL,
     performer char(256)  NOT NULL,
     compactID int  NOT NULL,
@@ -23,10 +23,9 @@ CREATE TABLE MusicalComposition (
 -- Table: Trade
 CREATE TABLE Trade (
     date date  NOT NULL,
-    code int  NOT NULL,
     compactID int  NOT NULL,
     amount int  NOT NULL,
-    TradeCodeInfo_id int  NOT NULL
+    code int  NOT NULL
 ) ;
 
 -- Table: TradeCodeInfo
@@ -48,7 +47,7 @@ ALTER TABLE Trade ADD FOREIGN KEY (compactID)
 ;
 
 -- Reference: Trade_TradeCodeInfo (table: Trade)
-ALTER TABLE Trade ADD FOREIGN KEY (TradeCodeInfo_id)
+ALTER TABLE Trade ADD FOREIGN KEY (code)
     REFERENCES TradeCodeInfo (id)
 ;
 

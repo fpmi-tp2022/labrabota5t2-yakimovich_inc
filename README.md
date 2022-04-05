@@ -6,6 +6,6 @@ App can be installed locally using console. Firstly, open necessary directory wi
 # Usage
     
 # Contributing
-- [Drozdova Yulia](https://github.com/julliettee)**team leader**, database design, app development
+- [Drozdova Yulia](https://github.com/julliettee): **team leader**, database design, app development
 - [Soroka Alexander](https://github.com/depravo): app building and test, app development
 - [Lazovskaya Tatsiana](https://github.com/tanyalzvsk): app design, documentation, app development

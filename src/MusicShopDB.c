@@ -1,8 +1,14 @@
 
 #include "../include/MusicShopDB.h"
 
+#define SQL_SIZE 600
+
 const int MAX_VALID_YR = 9999;
 const int MIN_VALID_YR = 2000;
+
+char* MyCallAns = "NULL";
+char LastDate[11];
+char LastDate2[11];
 
 static int callback(void* NotUsed, int argc, char** argv, char** azColName) {
 	printf("\n_____________________________________________________________\n");
@@ -143,7 +149,10 @@ void Requests(sqlite3* db, int accessRights)
 		scanf("%s", date1);
 		printf("Enter end of period in format HHHH.MM.DD:\n");
 		scanf("%s", date2);
-		// check of date
+		if(!checkDate(date1) || !checkDate(date2)) {
+                printf("Invalid date!");
+                break;
+                }
 		GetCostAndAmountonPeriod(db, id, date1, date2);
 		break;
 	}
@@ -249,3 +258,136 @@ int checkDate(char date[]){
     return 1;
 }
 
+int Insert(sqlite3 *db, char *zErrMsg, int ret){
+    char sql[SQL_SIZE] = "INSERT INTO ";
+    char table[100];
+    char columns[100];
+    char values[100];
+    int go = 1;
+
+    while (go){
+        //sprintf(sql, "%sINSERT INTO ", sql);
+        printf("Enter the table: ");
+	getchar();     
+	fgets(table, 20, stdin);
+        printf("Enter values, separated by ',': ");
+	fgets(values, 100, stdin);
+	if(!strncmp(table, "CompactDisk", 11))
+	  sprintf(sql, "%s%s (id,date,company,price) VALUES (%s); ", sql, table, values);
+	if(!strncmp(table, "MusicalComposition", 5))
+	  sprintf(sql, "%s%s (name,author,performer,compactID) VALUES (%s); ", sql, table, values);
+        if(!strncmp(table, "Trade", 5)) {
+	  sprintf(sql, "%s%s (date,compactID,amount,code) VALUES (%s); ", sql, table, values);
+		char date[13];
+		int compactID = 0, amount = 0, code = 0;
+		int pos = 0;
+		int last;
+		for(int i = 0; values[i] != '\0' && values[i] != '\n'; i++) {
+		  if(values[i] == ',') {
+		    last = i;
+		    pos++;
+		    continue;
+		  }
+		  if(pos == 0) {
+		    date[i] = values[i];
+		  }
+		  if(pos == 1) {
+		    compactID *= 10;	
+		    compactID += values[i] - '0';
+		  }
+		  if(pos == 2) {
+		    amount *= 10;	
+		    amount += values[i] - '0';
+		  }
+		  if(pos == 3) {
+		    code *= 10;	
+		    code += values[i] - '0';
+		  }	
+		}
+		GetLastDate(db);
+		for(int i = 1; i < 11; i++)
+			date[i-1] = date[i];
+		date[10] = '\0';
+		for(int i = 0; date[i] != '\0' ;i++) {
+		  if(date[i] < LastDate2[i]) {
+			printf("Invalid date!\n");
+			return 0;
+		  }
+		}
+		if(code == 2 && amount > HaveDisks(date, db)) {
+			printf("Invalid amount!");
+			return 0;
+		}
+	}
+      	printf("Press 1 to continue, press 0 to exit: ");
+        scanf("%d", &go);
+        
+    }
+    ret = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if (ret != SQLITE_OK){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+    else{
+        fprintf(stdout, "Done successfully!\n");
+    }
+    return 0;
+}
+
+static int callback2(void* NotUsed, int argc, char** argv, char** azColName) {
+    for (int i = 0; i < argc; i++) {
+        MyCallAns = (argv[i] ? argv[i] : "NULL");
+    }	
+	return 0;
+}
+
+static int callback3(void* NotUsed, int argc, char** argv, char** azColName) {
+    char* str = "2000.01.01";
+    for (int i = 0; i < argc; i++) {
+        str = (argv[i] ? argv[i] : "2000.01.01");
+    }	
+    for(int i = 0; str[i] != '\0'; i++)
+	LastDate2[i] = str[i];
+    return 0;
+}
+
+char* GetLastDate(sqlite3* db){
+	char sql[256];
+	sprintf(sql, 
+	"SELECT MAX(date) FROM Trade;");
+	char* zErrMsg = 0;
+	int rc = sqlite3_exec(db, sql, callback3, (void*)NULL, &zErrMsg);
+	return LastDate;
+}
+
+int HaveDisks(char *date, sqlite3* db){
+	char sql[256];
+	char* zErrMsg = 0; 
+	sprintf(sql, 
+	"SELECT SUM(amount) FROM Trade "\
+	"WHERE Trade.code = 2 AND Trade.date <= '%s';", date
+	);
+	int rc = sqlite3_exec(db, sql, callback2, (void*)NULL, &zErrMsg);
+	if (MyCallAns[0] == 'N'){
+		return 0;
+	}
+	int ot = 0;
+	for(int i = 0; MyCallAns[i] != '\0'; i++){
+		ot *= 10;
+		ot += (MyCallAns[i] - '0');
+	}
+	sprintf(sql, 
+	"SELECT SUM(amount) FROM Trade "\
+	"WHERE Trade.code = 1 AND Trade.date <= '%s';", date
+	);
+	zErrMsg = 0;
+	rc = sqlite3_exec(db, sql, callback2, (void*)NULL, &zErrMsg);
+	int ans =ot;
+	ot = 0;
+	for(int i = 0; MyCallAns[i] != '\0'; i++){
+		ot *= 10;
+		ot += (MyCallAns[i] - '0');
+	}
+	
+	return ans - ot;
+}	

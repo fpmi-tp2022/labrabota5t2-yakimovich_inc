@@ -47,6 +47,7 @@ int main(int argc, char* argv[]) {
 	Authorization();
 
 	sqlite3* db;
+	char* zErrMsg = 0;
 	int rc = sqlite3_open("src/Music_shop.db", &db);
 	if (rc != SQLITE_OK) {
 		fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
@@ -65,7 +66,7 @@ int main(int argc, char* argv[]) {
 				printf("You don't have access for changing BD\n");
 				break;
 			}
-			// to do
+			Insert(db, zErrMsg, rc);
 			break;
 		}
 		case 2:{

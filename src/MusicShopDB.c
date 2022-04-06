@@ -111,20 +111,30 @@ void Requests(sqlite3* db)
 	printf("\n\nChoose requests: \n"\
 		"1. Information about amount of sold & remaining compacts \n"\
 		"2. Information about compact (amount, cost) that were sold in period \n"\
-		"3. Information about compact, that was sold max times \n"\
-		"4. Information about amount of sold compacts of most popular performer \n"\
+		"3. Information about compact, that was sold max times (*) \n"\
+		"4. Information about amount of sold compacts of most popular performer (*) \n"\
 		"5. Information about authors (amount & sum of sold compacts of authors) \n"\
 		"6. Information of trade in period\n"\
-		"7. Information of compact disk trade\n");
+		"7. Information of compact disk trade (*) \n");
 	int answer;
 
 	scanf("%d", &answer);
 	switch (answer)
 	{
-	case 1:
+	case 1:{
+		if (accessRights == CLIENT_RIGHTS){
+				printf("You don't have access for this request \n");
+				break;
+		}
 		AllCompactTradeInfo(db);	
 		break;
+	}
 	case 2: {
+
+		if (accessRights == CLIENT_RIGHTS){
+				printf("You don't have access for this request \n");
+				break;
+		}
 		char date1[11], date2[11];
 		int id;
 		printf("Enter id of compact:\n");
@@ -143,10 +153,19 @@ void Requests(sqlite3* db)
 	case 4:
 		GetMostPopularPerformerTradeInfo(db);	
 		break;
-	case 5:
+	case 5:{
+		if (accessRights == CLIENT_RIGHTS){
+				printf("You don't have access for this request \n");
+				break;
+		}
 		AllAuthorsInfo(db);	
 		break;
+	}
 	case 6:{
+		if (accessRights == CLIENT_RIGHTS){
+				printf("You don't have access for this request \n");
+				break;
+		}
 		char date1[11], date2[11];
 		printf("Enter start of period in format HHHH.MM.DD:\n");
 		scanf("%s", date1);
@@ -168,7 +187,6 @@ void Requests(sqlite3* db)
 		GetCompactSoldInfo(db, id);
 		break;
 	}
-		break;
 	default:
 		break;
 	}
@@ -176,7 +194,7 @@ void Requests(sqlite3* db)
 
 int checkDate(char date[]){
     int d = 0, m = 0, y = 0, counter = 0;
-    char c[10];
+    char c[11];
     for(int i = 0; i < strlen(date); i++) {
         counter++;
         if(counter == 5 || counter == 8){

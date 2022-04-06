@@ -54,6 +54,14 @@ int main(int argc, char* argv[]) {
 		int answer;
 		printf("Choose action: \n1.INSERT\n2.DELETE\n3.Update\n4.Requests\n5.Exit\n");
 		scanf("%d", &answer);
+		switch (answer) {
+		case 4: {
+			Requests(db);
+		}
+		default: {
+			break;
+		}
+		}
 		go = FALSE;
 		
 	}

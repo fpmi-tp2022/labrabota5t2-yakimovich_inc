@@ -89,6 +89,24 @@ void Request5(sqlite3* db) {
 	);
 }
 
+void Request6(sqlite3* db, char* date1, char* date2) {
+	char* sql[512];
+	sprintf(sql, "SELECT CompactDisk.id, SUM(CUR.amount) as BOUGHT FROM CompactDisk "\
+		"JOIN "\
+		"(SELECT * FROM Trade WHERE '%s' <= Trade.date AND  Trade.date <= '%s') "\
+		"as CUR ON CompactDisk.id = CUR.compactID "\
+		"WHERE CUR.code = 1 "\
+		"GROUP BY CompactDisk.id;", date1, date2);
+	DBrequest(db, sql);
+	sprintf(sql, "SELECT CompactDisk.id, SUM(CUR.amount) as BOUGHT FROM CompactDisk "\
+		"JOIN "\
+		"(SELECT * FROM Trade WHERE '%s' <= Trade.date AND  Trade.date <= '%s') "\
+		"as CUR ON CompactDisk.id = CUR.compactID "\
+		"WHERE CUR.code = 2 "\
+		"GROUP BY CompactDisk.id;", date1, date2);
+	DBrequest(db, sql);
+	
+}
 void Requests(sqlite3* db)
 {
 	printf("\n\nChoose requests: \n"\
@@ -129,9 +147,17 @@ void Requests(sqlite3* db)
 	case 5:
 		Request5(db);	
 		break;
-	case 6:
+	case 6:{
+		char date1[11], date2[11];
+		printf("Enter start of period in format HHHH.MM.DD:\n");
+		scanf("%s", date1);
+		printf("Enter end of period in format HHHH.MM.DD:\n");
+		scanf("%s", date2);
+		// check of date
+		Request6(db, date1, date2);
 		
 		break;
+	}
 	case 7:
 		
 		break;

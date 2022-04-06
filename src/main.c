@@ -57,12 +57,17 @@ int main(int argc, char* argv[]) {
 		switch (answer) {
 		case 4: {
 			Requests(db);
+			break;
+		}
+		case 5: {
+			go = FALSE;
+			break;
 		}
 		default: {
 			break;
 		}
 		}
-		go = FALSE;
+		
 		
 	}
 	sqlite3_close(db);

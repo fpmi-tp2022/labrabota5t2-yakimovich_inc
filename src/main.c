@@ -55,6 +55,30 @@ int main(int argc, char* argv[]) {
 		printf("Choose action: \n1.INSERT\n2.DELETE\n3.Update\n4.Requests\n5.Exit\n");
 		scanf("%d", &answer);
 		switch (answer) {
+		case 1:{
+			if (accessRights == CLIENT_RIGHTS){
+				printf("You don't have access for changing BD\n");
+				break;
+			}
+			// to do
+			break;
+		}
+		case 2:{
+			if (accessRights == CLIENT_RIGHTS){
+				printf("You don't have access for changing BD\n");
+				break;
+			}
+			// to do
+			break;
+		}
+		case 3:{
+			if (accessRights == CLIENT_RIGHTS){
+				printf("You don't have access for changing BD\n");
+				break;
+			}
+			// to do
+			break;
+		}
 		case 4: {
 			Requests(db);
 			break;
@@ -67,7 +91,6 @@ int main(int argc, char* argv[]) {
 			break;
 		}
 		}
-		
 		
 	}
 	sqlite3_close(db);

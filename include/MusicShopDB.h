@@ -78,6 +78,17 @@ void Request4(sqlite3* db) {
 		"WHERE MusicalComposition.compactID = ID;"
 		);
 }
+
+void Request5(sqlite3* db) {
+	DBrequest(db,
+		"SELECT AUTHOR, SUM(AMOUNT), sum(COST) FROM( "\
+		"SELECT MusicalComposition.author AS AUTHOR, MusicalComposition.compactID, Trade.amount as AMOUNT, (Trade.amount * CompactDisk.price) as COST FROM MusicalComposition, CompactDisk "\
+		"INNER JOIN Trade "\
+		"WHERE Trade.code = 1 AND MusicalComposition.compactID = Trade.compactID AND CompactDisk.id = MusicalComposition.compactID) "\
+		"GROUP BY AUTHOR;"
+	);
+}
+
 void Requests(sqlite3* db)
 {
 	printf("\n\nChoose requests: \n"\
@@ -116,7 +127,7 @@ void Requests(sqlite3* db)
 		Request4(db);	
 		break;
 	case 5:
-		
+		Request5(db);	
 		break;
 	case 6:
 		

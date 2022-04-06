@@ -39,6 +39,18 @@ int DBrequest(sqlite3* db, char* sql)
 	}
 	return 0;
 }
+void Request1(sqlite3* db) {
+	DBrequest(db, "SELECT * FROM (SELECT CompactDisk.id AS ID1, SUM(Trade.amount) AS SOLD  FROM Trade, CompactDisk "\
+		"WHERE Trade.code = 1 AND CompactDisk.id = Trade.compactID "\
+		"GROUP BY CompactDisk.id) AS TABLE1 "\
+		"LEFT JOIN"\
+		"(SELECT * FROM(SELECT CompactDisk.id AS ID2, SUM(Trade.amount) AS HAVE  FROM Trade, CompactDisk "\
+		"WHERE Trade.code = 2 AND CompactDisk.id = Trade.compactID "\
+			" GROUP BY CompactDisk.id) AS TABLE2) "\
+		"WHERE ID1 = ID2 "\
+		"ORDER BY(HAVE - SOLD);"); 
+
+}
 void Request2(sqlite3* db, int id, char* date1, char* date2) {
 	char sql[512];
 	sprintf(sql, "SELECT compactID, (SUM(amount) * CompactDisk.price) FROM Trade, CompactDisk "\
@@ -63,7 +75,7 @@ void Requests(sqlite3* db)
 	switch (answer)
 	{
 	case 1:
-		
+		Request1(db);	
 		break;
 	case 2: {
 		char date1[10], date2[10];

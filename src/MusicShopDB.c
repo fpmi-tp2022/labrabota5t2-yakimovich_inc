@@ -128,7 +128,7 @@ void Requests(sqlite3* db, int accessRights)
 	switch (answer)
 	{
 	case 1:{
-		if (accessRights == CLIENT_RIGHTS){
+		if (accessRights == 0){
 				printf("You don't have access for this request \n");
 				break;
 		}
@@ -137,7 +137,7 @@ void Requests(sqlite3* db, int accessRights)
 	}
 	case 2: {
 
-		if (accessRights == CLIENT_RIGHTS){
+		if (accessRights == 0){
 				printf("You don't have access for this request \n");
 				break;
 		}
@@ -163,7 +163,7 @@ void Requests(sqlite3* db, int accessRights)
 		GetMostPopularPerformerTradeInfo(db);	
 		break;
 	case 5:{
-		if (accessRights == CLIENT_RIGHTS){
+		if (accessRights == 0){
 				printf("You don't have access for this request \n");
 				break;
 		}
@@ -171,7 +171,7 @@ void Requests(sqlite3* db, int accessRights)
 		break;
 	}
 	case 6:{
-		if (accessRights == CLIENT_RIGHTS){
+		if (accessRights == 0){
 				printf("You don't have access for this request \n");
 				break;
 		}
@@ -391,3 +391,31 @@ int HaveDisks(char *date, sqlite3* db){
 	
 	return ans - ot;
 }	
+int Delete(sqlite3 *db, char *zErrMsg, int ret){
+    char sql[SQL_SIZE] = "DELETE FROM ";
+    char table[20];
+    char column[60];
+    char value[40];
+    printf("Enter the table: ");
+    scanf("%s", table);
+    if(!strncmp(table, "Trade", 5) || !strncmp(table, "TradeCodeInfo", 13)) {
+	printf("You can't change this table!\n");
+	return 0;
+    }
+    else {
+    printf("Enter column: ");
+    scanf("%s", &column);
+    printf("Enter value: ");
+    scanf("%s", &value);    
+    sprintf(sql, "%s%s WHERE %s = %s", sql, table, column, value);
+    ret = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if (ret != SQLITE_OK){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+    else{
+        fprintf(stdout, "Done successfully!\n");
+    }
+    }
+    return 0;
+}

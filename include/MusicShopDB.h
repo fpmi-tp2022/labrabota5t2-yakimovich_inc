@@ -9,6 +9,9 @@
 
 #define ATTEMPTS_AMOUNT 3
 
+const int MAX_VALID_YR = 9999;
+const int MIN_VALID_YR = 2000;
+
 const char* ownerLogin = "admin";
 const char* ownerPassword = "111";
 static int accessRights;
@@ -23,3 +26,5 @@ void AllAuthorsInfo(sqlite3* db);
 void GetPeriodTrade(sqlite3* db, char* date1, char* date2);
 void GetCompactSoldInfo(sqlite3* db, int id);
 void Requests(sqlite3* db);
+bool isLeap(int year);
+

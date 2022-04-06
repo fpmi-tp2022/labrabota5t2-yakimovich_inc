@@ -58,6 +58,19 @@ void Request2(sqlite3* db, int id, char* date1, char* date2) {
 	DBrequest(db, sql);
 	
 }
+void Request3(sqlite3* db) {
+	DBrequest(db, 
+		"CREATE TABLE TABLE2 AS SELECT ID1, SOLD, CompactDisk.company, CompactDisk.date, CompactDisk.price "\
+		"FROM((SELECT CompactDisk.id AS ID1, SUM(Trade.amount) AS SOLD  FROM Trade, CompactDisk "\
+		"WHERE Trade.code = 1 AND CompactDisk.id = Trade.compactID "\
+		"GROUP BY CompactDisk.id) "\
+		"AS TABLE1), CompactDisk "\
+		"WHERE CompactDisk.id = ID1; "\
+		"SELECT * FROM TABLE2 "\
+		"WHERE TABLE2.SOLD = (SELECT MAX(SOLD) FROM TABLE2); "\
+		"DROP TABLE TABLE2; ");
+
+}
 
 void Requests(sqlite3* db)
 {
@@ -91,7 +104,7 @@ void Requests(sqlite3* db)
 		break;
 	}
 	case 3:
-		
+		Request3(db);	
 		break;
 	case 4:
 		

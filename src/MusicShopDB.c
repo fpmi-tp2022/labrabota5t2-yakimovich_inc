@@ -1,5 +1,5 @@
 
-#include "../include/MusicShopDB.c"
+#include "../include/MusicShopDB.h"
 
 
 static int callback(void* NotUsed, int argc, char** argv, char** azColName) {
@@ -151,7 +151,10 @@ void Requests(sqlite3* db)
 		scanf("%s", date1);
 		printf("Enter end of period in format HHHH.MM.DD:\n");
 		scanf("%s", date2);
-		// check of date
+		if(!checkDate(date1) || !checkDate(date2)) {
+		printf("Invalid date!");
+		break;
+		}
 		GetPeriodTrade(db, date1, date2);
 		
 		break;

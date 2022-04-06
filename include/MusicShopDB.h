@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include < string.h >
+#include <string.h>
 
 #define CLIENT_RIGHTS 0
 #define OWNER_RIGHTS  1
@@ -27,4 +27,4 @@ void GetPeriodTrade(sqlite3* db, char* date1, char* date2);
 void GetCompactSoldInfo(sqlite3* db, int id);
 void Requests(sqlite3* db);
 bool isLeap(int year);
-
+bool checkDate(char date[]);

@@ -110,11 +110,11 @@ void Requests(sqlite3* db)
 	printf("\n\nChoose requests: \n"\
 		"1. Information about amount of sold & remaining compacts \n"\
 		"2. Information about compact (amount, cost) that were sold in period \n"\
-		"3. Information about compact, that was sold max times \n"\
-		"4. Information about amount of sold compacts of most popular performer \n"\
+		"3. Information about compact, that was sold max times (*) \n"\
+		"4. Information about amount of sold compacts of most popular performer (*) \n"\
 		"5. Information about authors (amount & sum of sold compacts of authors) \n"\
 		"6. Information of trade in period\n"\
-		"7. Information of compact disk trade\n");
+		"7. Information of compact disk trade (*) \n");
 	int answer;
 
 	scanf("%d", &answer);

@@ -120,10 +120,19 @@ void Requests(sqlite3* db)
 	scanf("%d", &answer);
 	switch (answer)
 	{
-	case 1:
+	case 1:{
+		if (accessRights == CLIENT_RIGHTS){
+				printf("You don't have access for this request \n");
+				break;
+		}
 		AllCompactTradeInfo(db);	
 		break;
+	}
 	case 2: {
+		if (accessRights == CLIENT_RIGHTS){
+				printf("You don't have access for this request \n");
+				break;
+		}
 		char date1[10], date2[10];
 		int id;
 		printf("Enter id of compact:\n");
@@ -142,10 +151,19 @@ void Requests(sqlite3* db)
 	case 4:
 		GetMostPopularPerformerTradeInfo(db);	
 		break;
-	case 5:
+	case 5:{
+		if (accessRights == CLIENT_RIGHTS){
+				printf("You don't have access for this request \n");
+				break;
+		}
 		AllAuthorsInfo(db);	
 		break;
+	}
 	case 6:{
+		if (accessRights == CLIENT_RIGHTS){
+				printf("You don't have access for this request \n");
+				break;
+		}
 		char date1[11], date2[11];
 		printf("Enter start of period in format HHHH.MM.DD:\n");
 		scanf("%s", date1);
@@ -167,7 +185,6 @@ void Requests(sqlite3* db)
 		GetCompactSoldInfo(db, id);
 		break;
 	}
-		break;
 	default:
 		break;
 	}

@@ -1,2 +1,19 @@
-# Description
-Full-time music shop sells CDs of certain performers coming from various companies. As a customer, you can find information about CDs such as price, sold disks, high-demand disks,  disks made by certain  artists, disks made by the most popular artists and so on. As a seller, you can manage information: update, insert and delete.
+# What do we have to do?
+
+_Постоянно работающий музыкальный салон продает компакт-диски с записями_
+_определенных исполнителей, поступающие от различных компаний-производителей._
+Управление салона владеет информацией:
+* о компакт-дисках: код компакта, дата изготовления, компания-производитель, цена одного
+компакта;
+* об исполнителях музыкальных произведений: название музыкального произведения, автор,
+исполнитель, код компакта;
+* о поступлении и продаже компактов: дата операции, код операции (поступление или
+продажа), код компакта, количество экземпляров.
+Покупатель может узнать информацию о компакт-дисках по определенным параметрам.
+
+# Other sections
+* ## [Функциональные требования](https://github.com/fpmi-tp2022/labrabota5t2-yakimovich_inc/requirements)
+* ## [Диаграмма файлов приложения](https://github.com/fpmi-tp2022/labrabota5t2-yakimovich_inc/filedia)
+* ## [Дополнительная спецификация](https://github.com/fpmi-tp2022/labrabota5t2-yakimovich_inc/specification)
+* ## [Схема базы данных](https://fpmi-tp2022.github.io/labrabota5t2-yakimovich_inc/db)
+* ## [Презентация проекта](https://github.com/fpmi-tp2022/labrabota5t2-yakimovich_inc/presentation)

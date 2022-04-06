@@ -9,9 +9,64 @@
 
 #define ATTEMPTS_AMOUNT 3
 
+const int MAX_VALID_YR = 9999;
+const int MIN_VALID_YR = 2000;
+
 const char* ownerLogin = "admin";
 const char* ownerPassword = "111";
 static int accessRights;
+
+bool isLeap(int year)
+{
+    return (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));
+}
+bool checkDate(char date[]) {
+    int d = 0, m = 0, y = 0, counter = 0;
+    char c[10];
+    for(int i = 0; i < strlen(date); i++) {
+        counter++;
+        if(counter == 5 || counter == 8){
+            if(date[i] != '.')
+                return false;
+        }
+        if(counter < 5) {
+            if(date[i] > '9' || date[i] < '0')
+                return false;
+            y *= 10;
+            y += date[i] - '0';
+        }
+        if(counter > 5 && counter < 8) {
+            if(date[i] > '9' || date[i] < '0')
+                return false;
+            m *= 10;
+            m +=  date[i] - '0';
+        }
+        if(counter > 8 && counter < 11) {
+            if(date[i] > '9' || date[i] < '0')
+                return false;
+            d *= 10;
+            d +=  date[i] - '0';
+        }
+    }
+    if (y > MAX_VALID_YR ||
+        y < MIN_VALID_YR)
+        return false;
+    if (m < 1 || m > 12)
+        return false;
+    if (d < 1 || d > 31)
+        return false;
+    if (m == 2)
+    {
+        if (isLeap(y))
+            return (d <= 29);
+        else
+            return (d <= 28);
+    }
+    
+    if (m == 4 || m == 6 || m == 9 || m == 11)
+        return (d <= 30);
+    return true;
+}
 
 static int callback(void* NotUsed, int argc, char** argv, char** azColName) {
 
@@ -153,7 +208,10 @@ void Requests(sqlite3* db)
 		scanf("%s", date1);
 		printf("Enter end of period in format HHHH.MM.DD:\n");
 		scanf("%s", date2);
-		// check of date
+		if(!checkDate(date1) || !checkDate(date2)){
+			printf("Invalid data!");
+			break;
+		}
 		Request6(db, date1, date2);
 		
 		break;

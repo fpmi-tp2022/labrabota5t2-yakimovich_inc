@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include < string.h >
 #include "sqlite3.h"
-#include "DB.h"
+#include "MusicShopDB.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -51,7 +51,11 @@ int main(int argc, char* argv[]) {
 
 	int go = TRUE;
 	while (go) {
+		int answer;
+		printf("Choose action: \n1.INSERT\n2.DELETE\n3.Update\n4.Requests\n5.Exit\n");
+		scanf("%d", &answer);
 		go = FALSE;
+		
 	}
 	sqlite3_close(db);
 }

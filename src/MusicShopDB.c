@@ -1,6 +1,8 @@
 
 #include "../include/MusicShopDB.h"
 
+const int MAX_VALID_YR = 9999;
+const int MIN_VALID_YR = 2000;
 
 static int callback(void* NotUsed, int argc, char** argv, char** azColName) {
 	printf("\n_____________________________________________________________\n");
@@ -17,7 +19,6 @@ static int callback(void* NotUsed, int argc, char** argv, char** azColName) {
 int DBrequest(sqlite3* db, char* sql)
 {
 	char* zErrMsg = 0;
-	printf("%s", sql);
 	int rc = sqlite3_exec(db, sql, callback, (void*)NULL, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
@@ -124,7 +125,7 @@ void Requests(sqlite3* db)
 		AllCompactTradeInfo(db);	
 		break;
 	case 2: {
-		char date1[10], date2[10];
+		char date1[11], date2[11];
 		int id;
 		printf("Enter id of compact:\n");
 		scanf("%d", &id);
@@ -173,56 +174,60 @@ void Requests(sqlite3* db)
 	}
 }
 
- bool isLeap(int year)
-{
-    return (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));
-}
-
-bool checkDate(char date[]){
+int checkDate(char date[]){
     int d = 0, m = 0, y = 0, counter = 0;
     char c[10];
     for(int i = 0; i < strlen(date); i++) {
         counter++;
         if(counter == 5 || counter == 8){
             if(date[i] != '.')
-                return false;
+                return 0;
         }
         if(counter < 5) {
             if(date[i] > '9' || date[i] < '0')
-                return false;
+                return 0;
             y *= 10;
             y += date[i] - '0';
         }
         if(counter > 5 && counter < 8) {
             if(date[i] > '9' || date[i] < '0')
-                return false;
+                return 0;
             m *= 10;
             m +=  date[i] - '0';
         }
         if(counter > 8 && counter < 11) {
             if(date[i] > '9' || date[i] < '0')
-                return false;
+                return 0;
             d *= 10;
             d +=  date[i] - '0';
         }
     }
     if (y > MAX_VALID_YR ||
         y < MIN_VALID_YR)
-        return false;
+        return 0;
     if (m < 1 || m > 12)
-        return false;
+        return 0;
     if (d < 1 || d > 31)
-        return false;
+        return 0;
     if (m == 2)
     {
-        if (isLeap(y))
-            return (d <= 29);
+        if ((((y % 4 == 0) && (y % 100 != 0)) || (y % 400 == 0)))
+            if(d <= 29)
+		return 1;
+	    else
+		return 0;
         else
-            return (d <= 28);
+            if(d <= 28)
+		return 1;
+	    else
+		return 0;
     }
     
     if (m == 4 || m == 6 || m == 9 || m == 11)
-        return (d <= 30);
-    return true;
+        if(d <= 30)
+	  return 1;
+	else
+	  return 0;
+    return 1;
 }
 

@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "sqlite3.h"
-#include "MusicShopDB.h"
+#include <sqlite3.h>
+#include "../include/MusicShopDB.h"
 
 #define TRUE 1
 #define FALSE 0
 
+const char* ownerLogin = "admin";
+const char* ownerPassword = "111";
 
 #pragma warning(disable:4996)
 
@@ -42,7 +44,7 @@ int main(int argc, char* argv[]) {
 	Authorization();
 
 	sqlite3* db;
-	int rc = sqlite3_open("Music_shop.db", &db);
+	int rc = sqlite3_open("src/Music_shop.db", &db);
 	if (rc != SQLITE_OK) {
 		fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
 		sqlite3_close(db);

@@ -107,6 +107,16 @@ void Request6(sqlite3* db, char* date1, char* date2) {
 	DBrequest(db, sql);
 	
 }
+
+
+
+void Request7(sqlite3* db, int id) {
+	char* sql[256];
+	sprintf(sql, "SELECT * FROM Trade WHERE Trade.code = 2 AND Trade.compactID = %d;", id);
+	DBrequest(db, sql);
+}
+
+
 void Requests(sqlite3* db)
 {
 	printf("\n\nChoose requests: \n"\
@@ -159,7 +169,13 @@ void Requests(sqlite3* db)
 		break;
 	}
 	case 7:
-		
+	{
+		int id;
+		printf("Enter id of compact:\n");
+		scanf("%d", &id);
+		Request7(db, id);
+		break;
+	}
 		break;
 	default:
 		break;

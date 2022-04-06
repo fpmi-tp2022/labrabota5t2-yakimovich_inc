@@ -419,3 +419,37 @@ int Delete(sqlite3 *db, char *zErrMsg, int ret){
     }
     return 0;
 }
+int Update(sqlite3* db, char *zErrMsg, int ret) {
+    char sql[SQL_SIZE] = "UPDATE ";
+    char table[20];
+    char column[60];
+    char value[40];
+    char condition[60];
+    char conValue[40];
+    printf("Enter the table: ");
+    scanf("%s", table);
+    if(!strncmp(table, "Trade", 5) || !strncmp(table, "TradeCodeInfo", 13)) {
+	printf("You can't change this table!\n");
+	return 0;
+    }
+    else {
+    printf("Enter column: ");
+    scanf("%s", &column);
+    printf("Enter value: ");
+    scanf("%s", &value);    
+    printf("Enter condition column: ");
+    scanf("%s", &condition);
+    printf("Enter condition value: ");
+    scanf("%s", &conValue);
+    sprintf(sql, "%s%s set %s = %s WHERE %s = %s", sql, table, column, value, condition, conValue);
+    ret = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if (ret != SQLITE_OK){
+        fprintf(stderr, "SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+    else{
+        fprintf(stdout, "Done successfully!\n");
+    }
+    }
+    return 0;    
+}

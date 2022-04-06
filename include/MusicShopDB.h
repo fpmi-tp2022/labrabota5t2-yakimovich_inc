@@ -71,7 +71,13 @@ void Request3(sqlite3* db) {
 		"DROP TABLE TABLE2; ");
 
 }
-
+void Request4(sqlite3* db) {
+	DBrequest(db,
+		"SELECT ID, MAX(CNT), MusicalComposition.performer FROM "\
+		"(SELECT Trade.compactID AS ID, SUM(amount) AS CNT FROM Trade WHERE Trade.code = 1 GROUP BY Trade.compactID), MusicalComposition "\
+		"WHERE MusicalComposition.compactID = ID;"
+		);
+}
 void Requests(sqlite3* db)
 {
 	printf("\n\nChoose requests: \n"\
@@ -107,7 +113,7 @@ void Requests(sqlite3* db)
 		Request3(db);	
 		break;
 	case 4:
-		
+		Request4(db);	
 		break;
 	case 5:
 		

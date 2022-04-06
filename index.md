@@ -12,8 +12,8 @@ _определенных исполнителей, поступающие от 
 Покупатель может узнать информацию о компакт-дисках по определенным параметрам.
 
 # Other sections
-* ## [Функциональные требования](https://github.com/fpmi-tp2022/labrabota5t2-yakimovich_inc/requirements)
-* ## [Диаграмма файлов приложения](https://github.com/fpmi-tp2022/labrabota5t2-yakimovich_inc/filedia)
-* ## [Дополнительная спецификация](https://github.com/fpmi-tp2022/labrabota5t2-yakimovich_inc/specification)
+* ## [Функциональные требования](https://fpmi-tp2022.github.io/labrabota5t2-yakimovich_inc/requirements)
+* ## [Диаграмма файлов приложения](https://fpmi-tp2022.github.io/labrabota5t2-yakimovich_inc/filedia)
+* ## [Дополнительная спецификация](https://fpmi-tp2022.github.io/labrabota5t2-yakimovich_inc//specification)
 * ## [Схема базы данных](https://fpmi-tp2022.github.io/labrabota5t2-yakimovich_inc/db)
-* ## [Презентация проекта](https://github.com/fpmi-tp2022/labrabota5t2-yakimovich_inc/presentation)
+* ## [Презентация проекта](https://fpmi-tp2022.github.io/labrabota5t2-yakimovich_inc//presentation)

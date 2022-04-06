@@ -21,5 +21,5 @@ void GetMostPopularPerformerTradeInfo(sqlite3* db);
 void AllAuthorsInfo(sqlite3* db);
 void GetPeriodTrade(sqlite3* db, char* date1, char* date2);
 void GetCompactSoldInfo(sqlite3* db, int id);
-void Requests(sqlite3* db);
+void Requests(sqlite3* db, int a);
 int checkDate(char date[]);

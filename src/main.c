@@ -9,6 +9,9 @@
 
 const char* ownerLogin = "admin";
 const char* ownerPassword = "111";
+const int CLIENT_RIGHTS = 0;
+const int OWNER_RIGHTS = 1;
+int accessRights;
 
 #pragma warning(disable:4996)
 
@@ -82,7 +85,7 @@ int main(int argc, char* argv[]) {
 			break;
 		}
 		case 4: {
-			Requests(db);
+			Requests(db, accessRights);
 			break;
 		}
 		case 5: {

@@ -80,7 +80,7 @@ void AllAuthorsInfo(sqlite3* db) {
 
 void GetPeriodTrade(sqlite3* db, char* date1, char* date2) {
 	char* sql[512];
-	sprintf(sql, "SELECT CompactDisk.id, SUM(CUR.amount) as BOUGHT FROM CompactDisk "\
+	sprintf(sql, "SELECT CompactDisk.id, SUM(CUR.amount) as SOLD FROM CompactDisk "\
 		"JOIN "\
 		"(SELECT * FROM Trade WHERE '%s' <= Trade.date AND  Trade.date <= '%s') "\
 		"as CUR ON CompactDisk.id = CUR.compactID "\
@@ -106,7 +106,7 @@ void GetCompactSoldInfo(sqlite3* db, int id) {
 }
 
 
-void Requests(sqlite3* db)
+void Requests(sqlite3* db, int accessRights)
 {
 	printf("\n\nChoose requests: \n"\
 		"1. Information about amount of sold & remaining compacts \n"\

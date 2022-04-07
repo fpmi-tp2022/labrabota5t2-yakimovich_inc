@@ -10,3 +10,7 @@ obj/MusicShopDB.o: src/MusicShopDB.c
 clean:
 	rm -f *.o bin/task
 
+check:
+	shell: /usr/bin/bash -e {0}
+distcheck:
+	shell: /usr/bin/bash -e {0}

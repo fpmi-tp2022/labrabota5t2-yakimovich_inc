@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
 				printf("You don't have access for changing BD\n");
 				break;
 			}
-			// to do
+			Update(db, zErrMsg, rc);
 			break;
 		}
 		case 4: {

@@ -25,3 +25,4 @@ static int callback3(void* NotUsed, int argc, char** argv, char** azColName);
 char* GetLastDate(sqlite3* db);
 int HaveDisks(char *date, sqlite3* db);
 int Delete(sqlite3 *db, char *zErrMsg, int ret);
+int Update(sqlite3* db, char *zErrMsg, int ret);
